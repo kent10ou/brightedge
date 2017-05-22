@@ -103,7 +103,7 @@ var firstHundredRows = [{"id":1,"first_name":"Toiboid","last_name":"Filov","emai
 const table = document.getElementById('dataTable');
 const tbody = document.getElementById('tableBody');
 //
-const columns = [];
+const columns = []; // create array of keys
 for (var key in firstHundredRows[0]) {
   if (columns.indexOf(key) === -1) {
     columns.push(key);
@@ -111,6 +111,7 @@ for (var key in firstHundredRows[0]) {
 }
 console.log(columns);
 
+// for loading first 100 items
 for (var i = 0; i < firstHundredRows.length; i++) {
 
 }
@@ -198,20 +199,32 @@ function pageButtons($pCount,$cur) {
 
 // Filter Table
 function filterTable () {
-  var input, filter, tr, td, i;
-  input = document.getElementById("inputFilter");
-  filter = input.value.toUpperCase();
-  tr = table.getElementsByTagName('tr');
+  let input, filter, tr, i;
+  input = document.getElementById("inputFilter"); // grab input for filter
+  filter = input.value.toUpperCase(); // take value -> uppercase
+  tr = table.getElementsByTagName('tr'); // grab <tr>
 
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName('td')[0];
-    if (td) {
-      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+  for (i = 0; i < tr.length; i++) { // loop through all <tr>
+    let id = tr[i].getElementsByTagName('td')[0];
+    if (id) {
+      if (id.innerHTML.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";
       } else {
         tr[i].style.display = "none";
       }
     }
+    let first_name = tr[i].getElementsByTagName('td')[1];
+    if (first_name) {
+      if (first_name.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+
+
+
+
   }
 }
 
