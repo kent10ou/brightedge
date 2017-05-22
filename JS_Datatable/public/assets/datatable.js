@@ -205,7 +205,8 @@ function filterTable () {
   tr = table.getElementsByTagName('tr'); // grab <tr>
 
   for (i = 0; i < tr.length; i++) { // loop through all <tr>
-    let id = tr[i].getElementsByTagName('td')[0];
+    var id = tr[i].getElementsByTagName('td');
+    console.log('trtrtr: ', id);
     if (id) {
       if (id.innerHTML.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";
@@ -213,18 +214,7 @@ function filterTable () {
         tr[i].style.display = "none";
       }
     }
-    let first_name = tr[i].getElementsByTagName('td')[1];
-    if (first_name) {
-      if (first_name.innerHTML.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }
-
-
-
-
+   
   }
 }
 
