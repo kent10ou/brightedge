@@ -1,10 +1,127 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
+  <title>BrightEdge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+
+  <!-- stylesheets -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="./assets/styles/styles.css">
+
 
 </head>
 
 <body>
+  <!-- page container -->
+  <div id="container-fluid">
+    <!-- page header -->
+    <div id="header">
+      <img class="img-responsive blue-nav" src="./assets/images/blue_nav_bar.png" />
+      <!-- <img class="img logo" src="./assets/images/BrightEdge_logo.png" /> -->
+    </div>
+    <!-- page body   -->
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div id="main" class="col-sm-9">
+        <div class="col-sm-9 col-centered">
+          <img class="img-responsive" alt="banner" src="./assets/images/BrightEdge_banner.png" />
+        </div>
+        <div id="main-body" class="col-sm-8 border-right">
+          <h3>Top 20 Recent BrightEdge SEO Innovations</h3>
+          <p>
+            At BrightEdge our top value is customer success, and we have developed
+            tremendous innovations to help you stay ahead of the changes in search
+            and content marketing. As a SaaS company, our software is delivered as
+            a subscription and each month we bring you innovative new technologies
+            at no additional cost.
+          </p>
+          <p>
+            Please check out our latest Infographic that highlights the Top 20
+            BrightEdge Innovations from the past 12 months — all of these great
+            features are available in your account today! [<a href="#">Download a copy in PDF</a>]
+          </p>
+          <img class="img-responsive" src="./assets/images/body_image.png" />
+        </div> <!-- end of main-body -->
+        <div id="right-column" class="col-sm-4">
+          <div id="upper-container">
+            <img class="image-responsive" src="./assets/images/Demo_bg_img.png" style="position: relative" />
+            <h3 style="position: absolute; top: 0px; left: 10%">Want to learn more about the BrightEdge platform?</h3>
+            <button type="button" id="demo-button"><img src="./assets/images/request_demo_button.png" /></button>
 
+            <!-- Modal -->
+            <div class="modal fade" id="popup" role="dialog">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <form role="form">
+                      <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="First Name" />
+                      </div>
+                      <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="Last Name" />
+                      </div>
+                      <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email" placeholder="Email" />
+                      </div>
+                      <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" class="form-control" id="company" placeholder="Company" />
+                      </div>
+                      <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" class="form-control" id="phone" placeholder="Phone" />
+                      </div>
+                      <div class="form-group">
+                        <label for="annualRevenue">Annual Revenue</label>
+                        <input type="number" class="form-control" id="annualRevenue" placeholder="Annual Revenue" />
+                      </div>
+                      <div class="form-group">
+                        <label for="additionalNotes">Additional Notes</label>
+                        <input type="text" class="form-control" id="additionalNotes" placeholder="Additional Notes" />
+                      </div>
+                      <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block">Submit</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- end modal -->
+
+
+          </div> <!-- end upper-container -->
+          <hr />
+          <div id="lower-container">
+            <p><strong>You might also be interested in...</strong></p>
+            <img id="manifesto" class="img-responsive" src="./assets/images/manifesto.png" />
+            <div class="text">
+              <h4>We Hold these Truths to be Self Evident:</h4>
+              <p>Consectetur adipiscing elit. Sed ut orci ac neque tincidunt gravida non vitae tellus. Nam sem dui varius.</p>
+              <a href="#">Read More.</a>
+            </div>
+          </div> <!-- end of lower-container -->
+        </div> <!-- end right-column -->
+      </div> <!-- end of main -->
+      <div class="col-sm-1"></div>
+    </div> <!-- end of row -->
+  </div> <!-- end of container fluid -->
+
+
+  <!-- jQuery -->
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <!-- bootstrapjs -->
+  <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+
+    <script src="./assets/js/brightEdge.js"></script>
 </body>
 </html>

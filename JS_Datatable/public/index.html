@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JS Datatable</title>
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+  <div>
+    <input type="text" id="inputFilter" onkeyup="filterTable()" placeholder="Search!" />
+  </div>
+
+  <div class="container">
+    <table id="dataTable">
+      <thead id="tableHead">
+        <tr>
+          <th id="id" class="header" onclick="sortTable(0)">id</th>
+          <th id="first_name" class="header" onclick="sortTable(1)">first_name</th>
+          <th id="last_name" class="header" onclick="sortTable(2)">last_name</th>
+          <th id="email" class="header" onclick="sortTable(3)">email</th>
+          <th id="phone" class="header" onclick="sortTable(4)">phone</th>
+          <th id="birthday" class="header" onclick="sortTable(5)">birthday</th>
+          <th id="ssn" class="header" onclick="sortTable(6)">ssn</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+      </tbody>
+    </table>
+  </div>
+
+<script type="text/javascript" src="./assets/datatable.js"></script>
+</body>
+</html>
