@@ -100,8 +100,8 @@ var firstHundredRows = [{"id":1,"first_name":"Toiboid","last_name":"Filov","emai
 {"id":100,"first_name":"Violante","last_name":"Wainscoat","email":"vwainscoat2r@yelp.com","phone":"358-(176)383-1847","birthday":"1993-06-09","ssn":"229-91-4968"},
 ];
 
-const table = document.getElementById('dataTable');
-const tbody = document.getElementById('tableBody');
+const table = document.getElementById("dataTable");
+const tbody = document.getElementById("tableBody");
 //
 const columns = []; // create array of keys
 for (var key in firstHundredRows[0]) {
@@ -113,36 +113,36 @@ console.log(columns);
 
 // for loading first 100 items
 for (var i = 0; i < firstHundredRows.length; i++) {
-
 }
 
-//document ready
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('document is ready. I can sleep now');
+// ###### document ready ######
+document.addEventListener("DOMContentLoaded", function() {
+  console.log("document is ready. I can sleep now");
 
-  // GET request to '/load'
+  // ###### GET request to '/load' #######
   var request = new XMLHttpRequest();
 
   request.onload = function() {
-    console.log('inside req:', this);
+    console.log("inside req:", this);
     if (this.status >= 200 && this.status < 400) {
       // Success!
       // console.log(this.response);
       var data = JSON.parse(this.response);
       console.log("DATA: ", data);
 
-      data.forEach(function (obj) {
-        tbody.insertAdjacentHTML('beforeend', '<tr>'+
-          '<td>' + obj.id + '</td>' +
-          '<td>' + obj.first_name + '</td>'+
-          '<td>' + obj.last_name + '</td>' +
-          '<td>' + obj.email + '</td>' +
-          '<td>' + obj.phone + '</td>' +
-          '<td>' + obj.birthday + '</td>' +
-          '<td>' + obj.ssn + '</td>' +
-          '</tr>')
-      })
-
+      data.forEach(function(obj) {
+        tbody.insertAdjacentHTML(
+          "beforeend",
+          "<tr><td>" + obj.id +
+          "</td><td>" + obj.first_name +
+          "</td><td>" + obj.last_name +
+          "</td><td>" + obj.email +
+          "</td><td>" + obj.phone +
+          "</td><td>" + obj.birthday +
+          "</td><td>" + obj.ssn +
+          "</td></tr>"
+        );
+      });
     } else {
       // We reached our target server, but it returned an error
       throw error;
@@ -154,126 +154,105 @@ document.addEventListener('DOMContentLoaded', function() {
     throw error;
   };
 
-  request.open('GET', '/load', true);
+  request.open("GET", "/load", true);
 
   request.send();
 
+// ###### FILTER TABLE ######
+  var TableFilter = (function(Arr) {
+    var _input;
 
-});
-
-// Paginate Table
-var $table = document.getElementById("dataTable"),
-    $n = 100,
-    $rowCount = $table.rows.length,
-    $firstRow = $table.rows[0].firstElementChild.tagName,
-    $hasHead = ($firstRow === "TH"),
-    $tr = [],
-    $i, $ii, $j = ($hasHead) ? 1 : 0,
-    $th = ($hasHead ? table.rows[(0)].outerHTML : ""),
-    $pageCount = Math.ceil($rowCount /$n);
-
-if ($pageCount > 1) {
-  for ($i = $j, $ii = 0; $i < $rowcount; $i++, $ii++) {
-    $tr[$ii] = $table.rows[$i].outerHTML;
-  }
-  $table.insertAdjacentHTML('afterend', '<div id="buttons"></div>');
-  sort(1);
-}
-
-// ($pCount) : number of pages,($cur) : current page, the selected one ..
-function pageButtons($pCount,$cur) {
-	/* this variables will disable the "Prev" button on 1st page
-	   and "next" button on the last one */
-	var	$prevDis = ($cur == 1)?"disabled":"",
-		$nextDis = ($cur == $pCount)?"disabled":"",
-		/* this ($buttons) will hold every single button needed
-		** it will creates each button and sets the onclick attribute
-		** to the "sort" function with a special ($p) number..
-		*/
-		$buttons = "<input type='button' value='&lt;&lt; Prev' onclick='sort("+($cur - 1)+")' "+$prevDis+">";
-	for ($i=1; $i<=$pCount;$i++)
-		$buttons += "<input type='button' id='id"+$i+"'value='"+$i+"' onclick='sort("+$i+")'>";
-	$buttons += "<input type='button' value='Next &gt;&gt;' onclick='sort("+($cur + 1)+")' "+$nextDis+">";
-	return $buttons;
-}
-
-// Filter Table
-function filterTable () {
-  let input, filter, tr, i;
-  input = document.getElementById("inputFilter"); // grab input for filter
-  filter = input.value.toUpperCase(); // take value -> uppercase
-  tr = table.getElementsByTagName('tr'); // grab <tr>
-
-  for (i = 0; i < tr.length; i++) { // loop through all <tr>
-    var id = tr[i].getElementsByTagName('td');
-    console.log('trtrtr: ', id);
-    if (id) {
-      if (id.innerHTML.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
+    function _onInputEvent(e) {
+      _input = e.target;
+      console.log("_input: ", _input);
+      var tables = document.getElementsByClassName(
+        _input.getAttribute("data-table")
+      );
+      console.log("tables: ", tables);
+      Arr.forEach.call(tables, function(table) {
+        Arr.forEach.call(table.tBodies, function(tbody) {
+          Arr.forEach.call(tbody.rows, _filter);
+        });
+      });
     }
-   
+
+    function _filter(row) {
+      var text = row.textContent.toLowerCase(),
+        val = _input.value.toLowerCase();
+      console.log("text: ", text);
+      row.style.display = text.indexOf(val) === -1 ? "none" : "table-row";
+    }
+
+    return {
+      init: function() {
+        var inputs = document.getElementsByClassName("inputFilter");
+        Arr.forEach.call(inputs, function(input) {
+          input.oninput = _onInputEvent;
+        });
+      }
+    };
+  })(Array.prototype);
+
+  document.addEventListener("readystatechange", function() {
+    if (document.readyState === "complete") {
+      TableFilter.init();
+    }
+  });
+
+  // ##### PAGINATE TABLE ######
+  function getPagination (table){
+    var maxRows = document.getElementById('maxRows');
+    var pagination = document.getElementById('pagination');
+
+    maxRows.addEventListener('change',function(){
+    pagination.innerHTML = '';						// reset pagination
+      var trnum = 0 ;									// reset tr counter
+      var maxRows = parseInt($(this).val());			// get Max Rows from select option
+      var totalRows = $(table+' tbody tr').length;		// numbers of rows
+     $(table+' tr:gt(0)').each(function(){			// each TR in  table and not the header
+      trnum++;									// Start Counter
+      if (trnum > maxRows ){						// if tr number gt maxRows
+
+        $(this).hide();							// fade it out
+      }if (trnum <= maxRows ){$(this).show();}// else fade in Important in case if it ..
+     });											//  was fade out to fade it in
+     if (totalRows > maxRows){						// if tr total rows gt max rows option
+      var pagenum = Math.ceil(totalRows/maxRows);	// ceil total(rows/maxrows) to get ..
+                            //	numbers of pages
+      for (var i = 1; i <= pagenum ;){			// for each page append pagination li
+      $('.pagination').append('<li data-page="'+i+'">\
+                    <span>'+ i++ +'<span class="sr-only">(current)</span></span>\
+                  </li>').show();
+      }											// end for i
+    } 												// end if row count > max rows
+    $('.pagination li:first-child').addClass('active'); // add active class to the first li
+    $('.pagination li').on('click',function(e){		// on click each page
+      e.preventDefault();
+      var pageNum = $(this).attr('data-page');	// get it's number
+      var trIndex = 0 ;							// reset tr counter
+      $('.pagination li').removeClass('active');	// remove active class from all li
+      $(this).addClass('active');					// add active class to the clicked
+       $(table+' tr:gt(0)').each(function(){		// each tr in table not the header
+        trIndex++;								// tr index counter
+        // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
+        if (trIndex > (maxRows*pageNum) || trIndex <= ((maxRows*pageNum)-maxRows)){
+          $(this).hide();
+        }else {$(this).show();} 				//else fade in
+       }); 										// end of for each tr in table
+        });										// end of on click pagination list
+  });
+                      // end of on select change
+              // END OF PAGINATION
   }
-}
+  getPagination(table);
+});
 
 
 // Sort Table
-var header = document.getElementsByClassName('header');
-for(var i = 0; i < header.length; i++) {
-  console.log('inside header', header[i])
-  header[i].addEventListener('click', function () {
-    console.log('CLICKED ON HEADER');
-
-  })
-}
-
-function sortTable(n) {
-  // var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-  // table = document.getElementById("dataTable");
-  // switching = true;
-  // //Set the sorting direction to ascending:
-  // dir = "asc";
-  // /*Make a loop that will continue until no switching has been done:*/
-  // while (switching) {
-  //   //start by saying: no switching is done:
-  //   switching = false;
-  //   rows = table.getElementsByTagName("TR");
-  //   /*Loop through all table rows (except the first, which contains table headers):*/
-  //   for (i = 1; i < (rows.length - 1); i++) {
-  //     //start by saying there should be no switching:
-  //     shouldSwitch = false;
-  //     /*Get the two elements you want to compare, one from current row and one from the next:*/
-  //     x = rows[i].getElementsByTagName("TD")[n];
-  //     y = rows[i + 1].getElementsByTagName("TD")[n];
-  //     /*check if the two rows should switch place, based on the direction, asc or desc:*/
-  //     if (dir == "asc") {
-  //       if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-  //         //if so, mark as a switch and break the loop:
-  //         shouldSwitch= true;
-  //         break;
-  //       }
-  //     } else if (dir == "desc") {
-  //       if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-  //         //if so, mark as a switch and break the loop:
-  //         shouldSwitch= true;
-  //         break;
-  //       }
-  //     }
-  //   }
-  //   if (shouldSwitch) {
-  //     /*If a switch has been marked, make the switch and mark that a switch has been done:*/
-  //     rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-  //     switching = true;
-  //     //Each time a switch is done, increase this count by 1:
-  //     switchcount ++;
-  //   } else {
-  //     /*If no switching has been done AND the direction is "asc", set the direction to "desc" and run the while loop again.*/
-  //     if (switchcount == 0 && dir == "asc") {
-  //       dir = "desc";
-  //       switching = true;
-  //     }
-  //   }
-  // }
+var header = document.getElementsByClassName("header");
+for (var i = 0; i < header.length; i++) {
+  console.log("inside header", header[i]);
+  header[i].addEventListener("click", function() {
+    console.log("CLICKED ON HEADER");
+  });
 }
